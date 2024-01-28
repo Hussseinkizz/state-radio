@@ -23,15 +23,35 @@ let localStorage = {
     method: _useStorage.getState,
     options: {},
   },
-  exposes: {
-    name: 'onLocalChange',
-    method: _useStorage.onChange,
+  exposes: [{ name: 'onLocalChange', method: _useStorage.onChange }],
+};
+
+// Create a logging plugin
+const logging = {
+  name: 'loggingPlugin',
+  setter: {
+    method: (state, options) => {
+      // Add a 'logEntry' key with a timestamp to the state
+      console.log('do something with state via plugin');
+      console.log('log:', state, 'options:', options);
+      return [...state, 100];
+    },
+    options: { cry: 'meow meow!!' },
   },
+  getter: {
+    method: (state, options) => {
+      // No special behavior for getting in this example
+      return state;
+    },
+    options: {},
+  },
+  // No exposes in this example, as it's a simple logging plugin
 };
 
 // add plugins when initializing a new state radio
 const { channels } = new StateRadio({
-  plugins: [localStorage],
+  // plugins: [localStorage],
+  plugins: [logging],
 });
 
 // add channels to radio station
@@ -39,9 +59,10 @@ let numberChannel = channels.addChannel('numberChannel', nums);
 let userChannel = channels.addChannel('userChannel', user);
 
 // use a plugin on a channel and the channel usage remains the same
-numberChannel.usePlugin('localStorage');
+// numberChannel.usePlugin('localStorage');
+numberChannel.usePlugin('loggingPlugin');
 
-// // execute methods exposed by plugin
+// execute methods exposed by plugin
 // numberChannel.onLocalChange((e) =>
 //   console.log('Local storage state has changed via plugin!')
 // );

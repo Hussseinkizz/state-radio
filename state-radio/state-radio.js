@@ -1,5 +1,5 @@
 // State Radio - State Manager Library v1.0.0
-// By Hussein Kizz, Last Modified 04-01-2024
+// By Hussein Kizz, Last Modified 29-01-2024
 
 export function StateRadio(options = {}) {
   let channels = [];
@@ -32,11 +32,11 @@ export function StateRadio(options = {}) {
       channels[channelName].activePlugins.push(plugin);
 
       // Expose plugin methods on the channel object
-      // const exposedMethods = plugin.exposes || {};
-      // Object.entries(exposedMethods).forEach(([name, method]) => {
-      //   channels[channelName][name] = (...args) =>
-      //     plugin[name](channels[channelName].state, ...args);
-      // });
+      const exposedMethods = plugin.exposes || [];
+      exposedMethods.forEach((item) => {
+        channels[channelName][item.name] = (...args) =>
+          item.method(channels[channelName].state, ...args);
+      });
 
       console.log(`Plugin '${pluginName}' added to channel '${channelName}'`);
     } else {
@@ -61,6 +61,40 @@ export function StateRadio(options = {}) {
       subscribe(channelName, stateGetterCallback);
     }
     return channels[channelName].state;
+  };
+
+  const getStateWithPlugins = (channelName, options) => {
+    const channel = channels[channelName];
+    let state = channel.state;
+
+    for (const plugin of channel.activePlugins) {
+      if (plugin.getter) {
+        const pluginState = plugin.getter.method(state, plugin.getter.options);
+        state = { ...state, ...pluginState };
+      }
+    }
+
+    return getStateAuto(channelName, options);
+  };
+
+  const setStateWithPlugins = (channelName, newState) => {
+    const channel = channels[channelName];
+    let currentState = getState(channelName);
+    let updatedState = newState;
+    if (typeof newState === 'function') {
+      updatedState = newState(currentState);
+    }
+
+    for (const plugin of channel.activePlugins) {
+      if (plugin.setter) {
+        updatedState = plugin.setter.method(
+          updatedState,
+          plugin.setter.options
+        );
+      }
+    }
+
+    return stateSetter(channelName, updatedState);
   };
 
   const subscribe = (channelName, fn) => {
@@ -92,9 +126,9 @@ export function StateRadio(options = {}) {
       state: initialState,
       middleWares: [],
       history: [],
-      setState: (newState) => stateSetter(channelName, newState),
+      setState: (newState) => setStateWithPlugins(channelName, newState),
       setStateAsync: (newState) => setStateAsync(channelName, newState),
-      getState: (options) => getStateAuto(channelName, options),
+      getState: (options) => getStateWithPlugins(channelName, options),
       getHistory: () => getHistory(channelName),
       addMiddleWares: (...callbackFns) =>
         addMiddleWares(channelName, ...callbackFns),
@@ -145,8 +179,11 @@ export function StateRadio(options = {}) {
 
     channels[channelName].state = newState;
 
-    // log previous state to history
-    if (channels[channelName].history.length < maxHistoryLimit) {
+    // log previous state to history, first flash it out if limit reached
+    if (channels[channelName].history.length <= maxHistoryLimit) {
+      channels[channelName].history.push(previousState);
+    } else {
+      channels[channelName].history = [];
       channels[channelName].history.push(previousState);
     }
 

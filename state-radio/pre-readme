@@ -1,0 +1,107 @@
+# State Radio - State Manager Library v1.0.0
+
+![State Radio Logo](link_to_logo.png)
+
+State Radio is a lightweight state manager library designed for simplicity, flexibility, and extensibility. It empowers developers to manage application state effortlessly with support for plugins, middleware, and more.
+
+## Features
+
+- **🔌 Plugin Support:** Easily extend functionality with plugins for custom state handling.
+- **⚙️ Middleware:** Integrate middleware functions to customize state updates.
+- **🔄 Framework-Agnostic:** Use with any frontend framework or library.
+- **🚀 Simplified API:** A straightforward API for quick integration and ease of use.
+- **📜 History Logging:** Keep track of state changes with a customizable history feature.
+- **⏳ Asynchronous State Updates:** Support for asynchronous middleware for complex state transformations.
+- **🌐 Scalable:** Designed to scale with your application's growth.
+- **👥 Subscription System:** Subscribe to state changes with ease.
+
+## Installation
+
+```bash
+npm install state-radio
+```
+
+### Usage And Initialization
+
+``` javascript
+
+import { StateRadio } from 'state-radio';
+
+const { channels } = new StateRadio();
+```
+
+### Creating Channels
+
+```javascript
+
+const numberChannel = channels.addChannel('numberChannel', [1, 2, 3]);
+const userChannel = channels.addChannel('userChannel', { name: 'js', age: 20 });
+```
+
+### Using Plugins
+
+```javascript
+
+// Define a logging plugin
+const loggingPlugin = {
+  name: 'loggingPlugin',
+  setter: {
+    method: (state, options) => {
+      console.log('Log:', state, 'Options:', options);
+      return state; // Modify state as needed
+    },
+    options: { cry: 'meow meow!!' },
+  },
+  getter: {
+    method: (state, options) => state,
+    options: {},
+  },
+};
+
+// Use the logging plugin on a channel
+numberChannel.usePlugin(loggingPlugin);
+```
+
+### State Updates
+
+``` javascript
+
+// Update state
+numberChannel.setState((oldState) => [...oldState, 4]);
+console.log('Number Channel State:', numberChannel.getState());
+```
+
+### Subscriptions
+
+```javascript
+
+// Subscribe to state changes
+const callback = (newState) => console.log('Number channel changed to:', newState);
+numberChannel.subscribe(callback);
+```
+
+### Asynchronous middleware
+
+``` javascript
+
+// Define async middleware functions
+const addOneToEach = async (state) => {
+  // Asynchronous logic
+  return state.map((n) => n + 1);
+};
+
+// Add middleware to a channel
+numberChannel.addMiddleWares(addOneToEach);
+
+// Update state asynchronously
+numberChannel.setStateAsync((oldState) => [...oldState, 5])
+  .then((updatedState) => console.log('Async state updated:', updatedState))
+  .catch((error) => console.error('Error updating state:', error));
+```
+
+## Contributing
+
+If you find issues or have ideas for improvements, please open an issue or submit a pull request.
+License
+
+This project is licensed under the MIT License.
