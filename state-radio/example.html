@@ -1,0 +1,40 @@
+<div>
+  <!-- Task input and add button -->
+  <input type="text" id="taskInput" />
+  <button onclick="addTask(document.getElementById('taskInput').value)">
+    Add Task
+  </button>
+
+  <!-- Render tasks based on state -->
+  <div id="tasksContainer"></div>
+
+  <!-- Filter selection -->
+  <select onchange="setFilter(this.value)">
+    <option value="all">All</option>
+    <option value="completed">Completed</option>
+    <option value="active">Active</option>
+  </select>
+</div>
+
+<script>
+  // Update UI based on state changes
+  function updateTasksUI(tasks) {
+    const tasksContainer = document.getElementById('tasksContainer');
+    tasksContainer.innerHTML = '';
+
+    tasks.forEach((task, index) => {
+      const taskElement = document.createElement('div');
+      taskElement.innerHTML = `
+        <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+        <span>${task.text}</span>
+      `;
+      tasksContainer.appendChild(taskElement);
+    });
+  }
+
+  // Subscribe to tasks changes
+  tasksChannel.subscribe(updateTasksUI);
+
+  // Initial rendering
+  updateTasksUI(tasksChannel.getState());
+</script>
