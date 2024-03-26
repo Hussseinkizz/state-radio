@@ -1,8 +1,9 @@
 'use strict';
-import { StateRadio } from './state-radio.js';
+import { StateRadio } from '../lib/state-radio.js';
 const taskInput = document.querySelector('#taskInput');
 const addTaskButton = document.querySelector('#addTaskButton');
 const filterSelect = document.querySelector('#filterSelect');
+const counterElement = document.querySelector('#counter');
 
 addTaskButton.addEventListener('click', () => addTask(taskInput.value));
 filterSelect.addEventListener('change', () => setFilter(filterSelect.value));
@@ -11,6 +12,7 @@ const { channels } = new StateRadio();
 
 // Add a channel for tasks
 const tasksChannel = channels.addChannel('tasks', []);
+const counterChannel = channels.addChannel('counter', 0);
 
 // Add a channel for visibility filter
 const filterChannel = channels.addChannel('filter', 'all');
@@ -34,10 +36,14 @@ const setFilter = (filter) => {
   filterChannel.setState(filter);
 };
 
+let count = counterChannel.getState();
+
 // Subscribe to tasks changes
 tasksChannel.subscribe((tasks) => {
   // Update UI or trigger re-render
   console.log('Tasks Updated:', tasks);
+  counterChannel.setState((count) => count + 1);
+  counterElement.innerHTML = `Count: ${counterChannel.getState()}`;
 });
 
 // Subscribe to filter changes

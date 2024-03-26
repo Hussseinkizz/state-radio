@@ -3,9 +3,9 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     lib: {
-      entry: 'useLocalStorage.js',
-      name: 'useLocalStorage',
-      fileName: 'useLocalStorage',
+      entry: 'index.js',
+      name: 'state-radio',
+      fileName: 'state-radio',
     },
     rollupOptions: {
       output: {

@@ -2,10 +2,10 @@
   "name": "@kizz-js/state-radio",
   "version": "1.0.0",
   "type": "module",
-  "description": "A state management library that let's you tune to your state channels, subscribe, listen and react to changes upon notification with ease.",
-  "main": "dist/stateRadio.umd.cjs",
-  "module": "stateRadio.js",
-  "types": "dist/stateRadio.d.ts",
+  "description": "A state management library that let's you tune to your application state like a radio set",
+  "main": "dist/state-radio.umd.cjs",
+  "module": "state-radio.js",
+  "types": "dist/state-radio.d.ts",
   "files": [
     "dist"
   ],
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "docs": "jsdoc -d ./docs stateRadio.js"
+    "docs": "jsdoc -d ./docs ./lib/state-radio.js"
   },
   "devDependencies": {
     "jsdoc": "^4.0.2",
