@@ -1,0 +1,22 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  state-radio:
+    specifier: ^1.0.3
+    version: 1.0.3
+
+packages:
+
+  /@kizz-js/use-local-storage@1.0.3:
+    resolution: {integrity: sha512-2nHsugDfqIAMhNVO/eITwhTBH+6c4S1hKdSq2lLJizBhsbWKxbjGNpa1RupJuvu+xTkZ5dQ5llA44mcZp/naSg==}
+    dev: false
+
+  /state-radio@1.0.3:
+    resolution: {integrity: sha512-FyX6AmIaVCz01gWMBNRoxVyVKNq7rWUSndoJv+Ul4Jy9u6f7ACKjxyFtMIo2iqwYBu94KelaerBgmr06yJMkgw==}
+    dependencies:
+      '@kizz-js/use-local-storage': 1.0.3
+    dev: false

@@ -6,6 +6,10 @@ Originally made to scale state management in [Z-js framework](https://github.com
 
 In fact, if you know how a home radio set works, you surely know how this works already, but don't take my word for it, let's show you around...
 
+if you just want to test out and follow along with what we are about to go through, you can try this little live playground: [demo](https://stackblitz.com/edit/state-radio-example?file=main.js)
+
+otherwise, enough talks, let's dive in...
+
 ## 🔥 Features
 
 - **🔄 Framework-Agnostic:** Use with any frontend framework or library of your choice, vanilla or react or what, it all works.
@@ -18,6 +22,16 @@ In fact, if you know how a home radio set works, you surely know how this works 
 - **📯 State Of The Art:** Has no dependencies, scales with your application and remains performant, only updates channels which changed, the rest remains intact, it just works!
 
 ## ▶️ Installation
+
+For vanilla js projects a [cdn import](https://cdn.jsdelivr.net/npm/state-radio@1.0.4/dist/state-radio.js) is recommended, otherwise you have to refrence the file exactly after installation for example:
+
+```js
+
+import { StateRadio } from './node_modules/state-radio/dist/state-radio.js';
+
+```
+
+while for others say in react or any build tooling based setup, say using vite, it's the usual stuff, just import from `state-radio` and the rest will be just fine and in that regards the steps is as follow:
 
 ```bash
 npm install state-radio
@@ -396,7 +410,7 @@ and then create `todo.html` file and put
 
 That's it, play around, enjoy the radio show!!!
 
-But wait, what about using this in react? well see our guide on that here [state-radio-react](https://github.com/Hussseinkizz/state-radio-react) or if you just want to test out what we gone through, try this live playground: [demo](foo)
+But wait, what about using this in react? well see our guide on that here [state-radio-react](https://github.com/Hussseinkizz/state-radio-react) or if you just want to test out what we gone through, try this live playground: [demo](https://stackblitz.com/edit/state-radio-example?file=main.js)
 
 
 ## Contributing

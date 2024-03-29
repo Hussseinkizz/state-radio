@@ -1,5 +1,5 @@
 'use strict';
-import { StateRadio } from '../lib/state-radio.js';
+import { StateRadio } from './node_modules/state-radio/dist/state-radio.js';
 const taskInput = document.querySelector('#taskInput');
 const addTaskButton = document.querySelector('#addTaskButton');
 const filterSelect = document.querySelector('#filterSelect');

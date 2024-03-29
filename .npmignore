@@ -1,0 +1,8 @@
+node_modules
+example
+.vscode
+docs
+package-lock.json
+pnpm-lock.yaml
+vite.config.js
+.gitignore
