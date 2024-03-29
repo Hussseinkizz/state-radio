@@ -101,6 +101,8 @@ numberChannel.setStateAsync(async (oldState) => {
 
 ```
 
+Note that the api `https://num-api/number/new` is just for demo purposes and doesn't actually exist but just shows how it would work out with an api call that returns a number which in return we use in state.
+
 ### State History
 
 Get a list of previous state objects in the order they were applied in.
@@ -217,7 +219,9 @@ let localStorage = {
 };
 ```
 
-every plugin should provide a setter and getter method and each of those should return new state, setter takes in current channel state and returns it after setting it and manipulating it as it wants, and getter returns one it retrieves from it's own mechanisms. And then each plugin can be used as below:
+you can find the package `@kizz-js/use-local-storage` used in example as plugin here [_useLocalStorage 🪣](https://www.npmjs.com/package/@kizz-js/use-local-storage)
+
+Note: every plugin should provide a setter and getter method and each of those should return new state, setter takes in current channel state and returns it after setting it and manipulating it as it wants, and getter returns one it retrieves from it's own mechanisms. And then each plugin can be used as below:
 
 ``` javascript
 // add plugins when initializing a new state radio
