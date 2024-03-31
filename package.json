@@ -1,10 +1,10 @@
 {
   "name": "state-radio",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "description": "A state management library that let's you tune to your application state like a radio set",
   "main": "dist/state-radio.umd.cjs",
-  "module": "state-radio.js",
+  "module": "index.js",
   "types": "dist/state-radio.d.ts",
   "files": [
     "dist",
